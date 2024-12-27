@@ -10,10 +10,10 @@
 # ---------------------------------------------------
 
 # Obtener el directorio donde se encuentra el script
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 
 # Obtener el nombre del script para excluirlo del procesamiento
-SCRIPT_NAME="$(basename "$0")"
+SCRIPT_NAME=$(basename "$0")
 
 # Cambiar al directorio del script
 cd "$SCRIPT_DIR" || {
@@ -57,13 +57,13 @@ for file in *; do
             # Obtener el tiempo de modificación en segundos desde epoch
             MOD_TIME=$(stat -c %Y "$file")
             # Convertir a formato YYYYMMDD
-            FILE_DATE=$(date -d @"$MOD_TIME" "+%Y%m%d")
+            FILE_DATE=$(date -d "@$MOD_TIME" "+%Y%m%d")
         fi
 
-        # Extraer año, mes y día
-        YEAR=${FILE_DATE:0:4}
-        MONTH_NUM=${FILE_DATE:4:2}
-        DAY=${FILE_DATE:6:2}
+        # Extraer año, mes y día usando 'cut'
+        YEAR=$(echo "$FILE_DATE" | cut -c1-4)
+        MONTH_NUM=$(echo "$FILE_DATE" | cut -c5-6)
+        DAY=$(echo "$FILE_DATE" | cut -c7-8)
 
         # Obtener el nombre del mes en español
         MONTH_NAME=$(get_month_name "$MONTH_NUM")
@@ -77,11 +77,11 @@ for file in *; do
         # Crear las carpetas de año y mes si no existen
         mkdir -p "$YEAR/$MONTH_NAME"
 
-        # Separar el nombre base y la extensión del archivo
-        EXT="${file##*.}"
-        BASENAME="${file%.*}"
+        # Separar el nombre base y la extensión del archivo usando 'sed'
+        BASENAME=$(echo "$file" | sed 's/.*\..*/\1/')
+        EXT=$(echo "$file" | sed 's/.*\..*/\1/')
 
-        # Manejar archivos sin extensión
+        # Verificar si el archivo tiene extensión
         if [ "$BASENAME" = "$file" ]; then
             NEW_NAME="${BASENAME}_${FILE_DATE}"
         else
