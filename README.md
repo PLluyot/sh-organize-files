@@ -138,7 +138,7 @@ colocar el script en la misma carpeta que los archivos que deseas organizar y ej
 
 ---
 
-## Mejores Opcionales
+## Mejoras Opcionales
 
 1. **Manejo de Nombres con Espacios**  
    Asegúrate de envolver las variables en comillas dobles dentro del bucle `for` y en el comando `mv`:
