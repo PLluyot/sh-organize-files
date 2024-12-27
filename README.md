@@ -30,5 +30,5 @@
 1. **Clonar el Repositorio:**
 
    ```sh
-   git clone [https://github.com/tu-usuario/organizador-archivos.git](https://github.com/PLluyot/sh-organize-files.git)
+   git clone https://github.com/PLluyot/sh-organize-files.git
 
