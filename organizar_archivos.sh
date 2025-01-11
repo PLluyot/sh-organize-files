@@ -4,7 +4,7 @@
 # Script: organizar_archivos.sh
 # Descripción:
 #   Este script organiza los archivos en la carpeta donde se encuentra
-#   en subcarpetas por año y mes basándose en la fecha de modificación
+#   en subcarpetas por año, mes y día basándose en la fecha de modificación
 #   de cada archivo. Renombra los archivos para incluir la fecha.
 #   No procesa el propio script.
 # ---------------------------------------------------
@@ -74,12 +74,12 @@ for file in *; do
             continue
         fi
 
-        # Crear las carpetas de año y mes si no existen
-        mkdir -p "$YEAR/$MONTH_NAME"
+        # Crear las carpetas de año, mes y día si no existen
+        mkdir -p "$YEAR/$MONTH_NAME/$YEAR$MONTH_NUM$DAY"
 
         # Separar el nombre base y la extensión del archivo usando 'sed'
-        BASENAME=$(echo "$file" | sed 's/.*\..*/\1/')
-        EXT=$(echo "$file" | sed 's/.*\..*/\1/')
+        BASENAME=$(echo "$file" | sed 's/\(.*\)\..*/\1/')
+        EXT=$(echo "$file" | sed 's/.*\.\(.*\)/\1/')
 
         # Verificar si el archivo tiene extensión
         if [ "$BASENAME" = "$file" ]; then
@@ -89,10 +89,10 @@ for file in *; do
         fi
 
         # Mover y renombrar el archivo a la carpeta correspondiente
-        mv "$file" "$YEAR/$MONTH_NAME/$NEW_NAME"
+        mv "$file" "$YEAR/$MONTH_NAME/$YEAR$MONTH_NUM$DAY/$NEW_NAME"
 
         # Opcional: Imprimir una línea indicando la acción realizada
-        echo "Movido: '$file' -> '$YEAR/$MONTH_NAME/$NEW_NAME'"
+        echo "Movido: '$file' -> '$YEAR/$MONTH_NAME/$YEAR$MONTH_NUM$DAY/$NEW_NAME'"
     fi
 done
 
